@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 import { generateInitialFrame, calculateNextFrame, testing } from "./gameOfLife";
 import Canvas from "./Canvas";
-import ControlsPanel from "./ControlsPanel";
+import ControlPanel from "./ControlPanel";
 
 let interval = null;
 const initialSize = [160, 90];
@@ -35,7 +35,7 @@ function App() {
   return (
     <div className="max-w-[1440px] px-10 pt-2 flex flex-col items-center gap-4 mx-auto">
       <p className="text-2xl font-semibold">Game of life</p>
-      <ControlsPanel
+      <ControlPanel
         {...{
           speed,
           frame,
