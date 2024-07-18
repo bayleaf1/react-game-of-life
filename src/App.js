@@ -34,7 +34,7 @@ function App() {
 
   return (
     <div className="max-w-[1440px] px-10 pt-2 flex flex-col items-center gap-4 mx-auto">
-      <p className="text-2xl font-semibold">Game of life 3.</p>
+      <p className="text-2xl font-semibold">Game of life</p>
       <ControlPanel
         {...{
           speed,
