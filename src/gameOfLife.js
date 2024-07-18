@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 export function generateInitialFrame(width, height) {
-  return generateFrame(width, height, () => (Math.random() > 0.94 ? 1 : 0));
+  return generateFrame(width, height, () => (Math.random() > 0.95 ? 1 : 0));
 
   function generateFrame(width, height, getValue = () => 0) {
     let data = new Array(height)
