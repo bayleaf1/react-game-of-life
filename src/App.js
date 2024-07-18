@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
-import { generateInitialFrame, calculateNextFrame, testing } from "./frame";
+import { generateInitialFrame, calculateNextFrame, testing } from "./gameOfLife";
 import Canvas from "./Canvas";
 import ControlsPanel from "./ControlsPanel";
 
@@ -8,9 +8,9 @@ let interval = null;
 const initialSize = [160, 90];
 
 function App() {
+  // testing();
   const [speed, setSpeed] = useState(0.75);
   const [debouncedSpeed] = useDebounce(speed, 300);
-  testing();
   const [frame, setFrame] = useState(() =>
     generateInitialFrame(...initialSize)
   );
