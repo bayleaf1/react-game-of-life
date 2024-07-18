@@ -4,8 +4,6 @@ import { Button, Slider } from "antd";
 export default function ControlsPanel({
   onRestart,
   onChangeSpeed,
-  width,
-  onChangeSize,
   speed,
 }) {
   return (
@@ -26,17 +24,6 @@ export default function ControlsPanel({
           className="w-20"
           onChange={onChangeSpeed}
           value={speed}
-        />
-      </div>
-      <div className={"flex flex-col"}>
-        <p className="text-xs font-medium">Size</p>
-        <Slider
-          min={62}
-          step={9}
-          max={215}
-          className="w-20"
-          onChange={onChangeSize}
-          value={width}
         />
       </div>
     </div>

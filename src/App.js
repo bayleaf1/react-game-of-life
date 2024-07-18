@@ -5,19 +5,20 @@ import Canvas from "./Canvas";
 import ControlsPanel from "./ControlsPanel";
 
 let interval = null;
+const initialSize = [160, 90];
+
 function App() {
-  const [speed, setSpeed] = useState(0.5);
-  const [size, setSize] = useState({ width: 160, height: 90 });
+  const [speed, setSpeed] = useState(0.75);
   const [debouncedSpeed] = useDebounce(speed, 300);
   testing();
   const [frame, setFrame] = useState(() =>
-    generateInitialFrame(size.width, size.height)
+    generateInitialFrame(...initialSize)
   );
 
   useEffect(() => {
     interval = setTimeout(() => {
       setFrame(calculateNextFrame(frame));
-    }, 1000 * debouncedSpeed);
+    }, 1000 *  (1 - debouncedSpeed));
 
     return () => {
       if (interval !== null) clearInterval(interval);
@@ -25,16 +26,11 @@ function App() {
   }, [frame, debouncedSpeed]);
 
   const onRestart = () => {
-    setFrame(generateInitialFrame(size.width, size.height));
+    setFrame(generateInitialFrame(...initialSize));
   };
 
   const onChangeSpeed = (v) => setSpeed(v);
 
-  const onChangeSize = (width) => {
-    let size = { width, height: Math.floor(width / 16) * 9 };
-    setSize(size);
-    setFrame(generateInitialFrame(size.width, size.height));
-  };
 
   return (
     <div className="max-w-[1440px] px-10 pt-2 flex flex-col items-center gap-4 mx-auto">
@@ -45,12 +41,10 @@ function App() {
           frame,
           onChangeSpeed,
           onRestart,
-          onChangeSize,
-          width: size.width,
         }}
       />
 
-      <Canvas frame={frame} key={size.width} />
+      <Canvas frame={frame}/>
     </div>
   );
 }

@@ -3,52 +3,51 @@ const CV_WIDTH = 1440;
 const CV_HEIGHT = 810;
 
 export default function Canvas({ frame }) {
+  const CELL_SIZE = CV_HEIGHT / frame.height;
+
   useEffect(() => {
-    const CELL_SIZE = CV_HEIGHT / frame.height;
-    let cv = document.querySelector("canvas");
-    const ctx = cv && cv.getContext && cv.getContext("2d");
+      let cv = document.querySelector("canvas");
+      const ctx = cv && cv.getContext && cv.getContext("2d");
 
-    if (ctx) {
-      drawNet();
+      if (ctx) {
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, CV_WIDTH, CV_HEIGHT);
+          drawNet();
 
-      function drawNet() {
-        setStyle();
+        function drawNet() {
+          setStyle();
 
-        for (let index = 0; index < frame.height; index++)
-          drawVerticalLine(index);
-        for (let index = 0; index < frame.width; index++)
-          drawHorizontalLine(index);
+          for (let index = 0; index < frame.height; index++)
+            drawVerticalLine(index);
+          for (let index = 0; index < frame.width; index++)
+            drawHorizontalLine(index);
 
-        function setStyle() {
-          ctx.strokeStyle = "gray";
-          ctx.lineWidth = 0.1;
-        }
-        function drawHorizontalLine(colIndex) {
-          ctx.beginPath();
-          ctx.moveTo(colIndex * CELL_SIZE, 0);
-          ctx.lineTo(colIndex * CELL_SIZE, CV_HEIGHT);
-          ctx.stroke();
-        }
+          function setStyle() {
+            ctx.strokeStyle = "gray";
+            ctx.lineWidth = 0.1;
+          }
+          function drawHorizontalLine(colIndex) {
+            ctx.beginPath();
+            ctx.moveTo(colIndex * CELL_SIZE, 0);
+            ctx.lineTo(colIndex * CELL_SIZE, CV_HEIGHT);
+            ctx.stroke();
+          }
 
-        function drawVerticalLine(rowIndex) {
-          ctx.strokeStyle = "gray";
-          ctx.lineWidth = 0.1;
-          ctx.beginPath();
-          ctx.moveTo(0, rowIndex * CELL_SIZE);
-          ctx.lineTo(CV_WIDTH, rowIndex * CELL_SIZE);
-          ctx.stroke();
+          function drawVerticalLine(rowIndex) {
+            ctx.beginPath();
+            ctx.moveTo(0, rowIndex * CELL_SIZE);
+            ctx.lineTo(CV_WIDTH, rowIndex * CELL_SIZE);
+            ctx.stroke();
+          }
         }
       }
-    }
-  }, [frame.width, frame.length]);
+  }, [CELL_SIZE]);
 
   useEffect(() => {
-    const CELL_SIZE = CV_HEIGHT / frame.height;
     let cv = document.querySelector("canvas");
     const ctx = cv && cv.getContext && cv.getContext("2d");
 
     if (ctx) {
-      //   drawNet();
       drawCells(ctx);
 
       function drawCells() {
@@ -58,21 +57,14 @@ export default function Canvas({ frame }) {
             if (value) drawCell(ctx, rowIndex, colIndex);
           }
         }
+
         function drawCell(ctx, rowIndex, colIndex) {
           ctx.fillStyle = "blue";
-          ctx.strokeStyle = "white";
-          ctx.lineWidth = 0.7;
-          ctx.strokeRect(
-            colIndex * CELL_SIZE,
-            rowIndex * CELL_SIZE,
-            CELL_SIZE,
-            CELL_SIZE
-          );
           ctx.fillRect(
-            colIndex * CELL_SIZE,
-            rowIndex * CELL_SIZE,
-            CELL_SIZE,
-            CELL_SIZE
+            colIndex * CELL_SIZE + 1,
+            rowIndex * CELL_SIZE + 1,
+            CELL_SIZE - 2,
+            CELL_SIZE - 2
           );
         }
       }
@@ -89,20 +81,12 @@ export default function Canvas({ frame }) {
             }
           }
           function drawCell(ctx, rowIndex, colIndex) {
-            ctx.fillStyle = "blue";
-            ctx.strokeStyle = "white";
-            ctx.lineWidth = 0.7;
-            ctx.strokeRect(
-              colIndex * CELL_SIZE,
-              rowIndex * CELL_SIZE,
-              CELL_SIZE,
-              CELL_SIZE
-            );
+            ctx.fillStyle = "white";
             ctx.fillRect(
-              colIndex * CELL_SIZE,
-              rowIndex * CELL_SIZE,
-              CELL_SIZE,
-              CELL_SIZE
+              colIndex * CELL_SIZE + 1,
+              rowIndex * CELL_SIZE + 1,
+              CELL_SIZE - 2,
+              CELL_SIZE - 2
             );
           }
         }
