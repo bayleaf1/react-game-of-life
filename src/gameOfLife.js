@@ -104,6 +104,29 @@ class Cell {
   }
 }
 
+class Ruler {
+  constructor(inspector) {
+    this.inspector = inspector;
+  }
+
+  cellForNextGeneration(cell) {
+    const aliveNeighbours = this.inspector.countAliveNeighbours(cell);
+    let create = Cell.dead;
+
+    if (cell.isAlive()) {
+      let shouldBeAlive = aliveNeighbours > 1 && aliveNeighbours < 4;
+      if (shouldBeAlive) create = Cell.alive;
+    }
+
+    if (cell.isDead()) {
+      let shouldBeAlive = aliveNeighbours >= 3;
+      if (shouldBeAlive) create = Cell.alive;
+    }
+
+    return create(cell.rowIndex(), cell.colIndex());
+  }
+}
+
 class Inspector {
   constructor(frame) {
     this.frame = frame;
@@ -129,29 +152,6 @@ class Inspector {
       cell.colIndex() + colOffset
     );
     return nbCell || Cell.dead();
-  }
-}
-
-class Ruler {
-  constructor(inspector) {
-    this.inspector = inspector;
-  }
-
-  cellForNextGeneration(cell) {
-    const aliveNeighbours = this.inspector.countAliveNeighbours(cell);
-    let create = Cell.dead;
-
-    if (cell.isAlive()) {
-      let shouldBeAlive = aliveNeighbours > 1 && aliveNeighbours < 4;
-      if (shouldBeAlive) create = Cell.alive;
-    }
-
-    if (cell.isDead()) {
-      let shouldBeAlive = aliveNeighbours >= 3;
-      if (shouldBeAlive) create = Cell.alive;
-    }
-
-    return create(cell.rowIndex(), cell.colIndex());
   }
 }
 
