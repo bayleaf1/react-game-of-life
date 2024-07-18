@@ -80,32 +80,32 @@ export default function Canvas({ frame }) {
 
     return () => {
       if (ctx) {
-drawCells()
+        drawCells();
         function drawCells() {
-            for (let rowIndex = 0; rowIndex < frame.height; rowIndex++) {
-              for (let colIndex = 0; colIndex < frame.width; colIndex++) {
-                let value = frame.rows[rowIndex][colIndex];
-                if (value) drawCell(ctx, rowIndex, colIndex);
-              }
-            }
-            function drawCell(ctx, rowIndex, colIndex) {
-              ctx.fillStyle = "blue";
-              ctx.strokeStyle = "white";
-              ctx.lineWidth = 0.7;
-              ctx.strokeRect(
-                colIndex * CELL_SIZE,
-                rowIndex * CELL_SIZE,
-                CELL_SIZE,
-                CELL_SIZE
-              );
-              ctx.fillRect(
-                colIndex * CELL_SIZE,
-                rowIndex * CELL_SIZE,
-                CELL_SIZE,
-                CELL_SIZE
-              );
+          for (let rowIndex = 0; rowIndex < frame.height; rowIndex++) {
+            for (let colIndex = 0; colIndex < frame.width; colIndex++) {
+              let value = frame.rows[rowIndex][colIndex];
+              if (value) drawCell(ctx, rowIndex, colIndex);
             }
           }
+          function drawCell(ctx, rowIndex, colIndex) {
+            ctx.fillStyle = "blue";
+            ctx.strokeStyle = "white";
+            ctx.lineWidth = 0.7;
+            ctx.strokeRect(
+              colIndex * CELL_SIZE,
+              rowIndex * CELL_SIZE,
+              CELL_SIZE,
+              CELL_SIZE
+            );
+            ctx.fillRect(
+              colIndex * CELL_SIZE,
+              rowIndex * CELL_SIZE,
+              CELL_SIZE,
+              CELL_SIZE
+            );
+          }
+        }
       }
     };
   }, [frame]);
