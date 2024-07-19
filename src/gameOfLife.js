@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 export function generateInitialFrame(width, height) {
-  return generateFrame(width, height, () => (Math.random() > 0.95 ? 1 : 0));
+  return generateFrame(width, height, () => (Math.random() > 0.92 ? 1 : 0));
 
   function generateFrame(width, height, getValue = () => 0) {
     let data = new Array(height)
@@ -55,6 +55,7 @@ class Frame {
       width: _.get(this.data, "[0]", []).length,
       height: _.get(this.data, "length", 0),
       rows: this.toArraysWithNumbers(),
+      population: new Inspector(this).population().alive
     };
   }
 
@@ -119,7 +120,7 @@ class Ruler {
     }
 
     if (cell.isDead()) {
-      let shouldBeAlive = aliveNeighbours >= 3;
+      let shouldBeAlive = aliveNeighbours === 3;
       if (shouldBeAlive) create = Cell.alive;
     }
 
@@ -130,6 +131,13 @@ class Ruler {
 class Inspector {
   constructor(frame) {
     this.frame = frame;
+  }
+  population(){
+    let count = 0;
+    this.frame.traverse((cell) => {
+      if (cell.isAlive()) count++;
+    });
+    return {alive: count};
   }
 
   countAliveNeighbours(cell) {
@@ -169,8 +177,8 @@ export function testing() {
     ],
     [
       [0, 0, 0, 0, 0],
-      [0, 1, 1, 0, 0],
-      [0, 1, 0, 1, 0],
+      [0, 1, 0, 0, 0],
+      [0, 1, 0, 0, 0],
       [0, 1, 1, 1, 0],
       [0, 0, 0, 0, 0],
     ]

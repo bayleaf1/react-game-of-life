@@ -5,6 +5,8 @@ export default function ControlsPanel({
   onRestart,
   onChangeSpeed,
   speed,
+  population,
+  generation
 }) {
   return (
     <div className="flex gap-4 items-center">
@@ -25,6 +27,10 @@ export default function ControlsPanel({
           onChange={onChangeSpeed}
           value={speed}
         />
+      </div>
+      <div className="flex flex-col w-36 ">
+        <span className="text-sm">Generation: <span className="font-medium">{generation}</span></span>
+        <span className="text-sm">Population: &nbsp;<span className="font-medium">{population}</span></span>
       </div>
     </div>
   );
